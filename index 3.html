@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>HSCB lab Christmas Connections — Option A1</title>
+<style>
+  :root{--bg1:#07142d;--accent:#d946ef}
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:linear-gradient(180deg,var(--bg1),#052b46);color:#eef2ff;overflow-x:hidden}
+  .wrap{max-width:1024px;margin:28px auto;padding:18px;position:relative;z-index:3}
+  header{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+  .logo{width:72px;height:72px;border-radius:12px;background:linear-gradient(135deg,#ffdf7e,#ff7ab6);display:flex;align-items:center;justify-content:center;font-size:34px}
+  h1{margin:0;font-size:24px;color:white}
+  .subtitle{color:#c6f7ff;opacity:0.95;margin-top:6px;font-size:13px}
+  .board{display:grid;grid-template-columns:1fr 520px;gap:18px;margin-top:12px}
+  .panel{background:rgba(255,255,255,0.03);backdrop-filter:blur(6px);border-radius:14px;padding:14px;border:1px solid rgba(255,255,255,0.04)}
+  .tiles{display:flex;flex-wrap:wrap;gap:10px;padding:8px;min-height:78px}
+  .tile{padding:8px 14px;border-radius:999px;background:linear-gradient(180deg,#ffffff10,#ffffff06);border:1px solid rgba(255,255,255,0.06);cursor:grab;color:#fff;font-weight:700;box-shadow:0 6px 18px rgba(3,7,18,0.35);user-select:none}
+  .bins{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .bin{min-height:140px;padding:12px;border-radius:10px;border:2px dashed rgba(255,255,255,0.06);background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));display:flex;flex-direction:column;gap:8px;position:relative}
+  .bin.solved{border-style:solid;background:linear-gradient(90deg,#072 10%, #053 100%);}
+  .bin-label{font-weight:800;color:#fff;margin-bottom:6px}
+  .controls{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  button{padding:9px 14px;border-radius:10px;border:0;background:var(--accent);color:white;font-weight:800;cursor:pointer}
+  button.secondary{background:transparent;border:1px solid rgba(255,255,255,0.08);color:#e6f6ff}
+  .small{font-size:13px;color:#cfeef7}
+  .result{margin-top:12px;padding:12px;border-radius:10px;font-weight:700}
+  .correct{background:linear-gradient(90deg,#052e14,#064e2f);color:#baf5d9}
+  .wrong{background:linear-gradient(90deg,#3b1f00,#5a2a00);color:#ffe8c2}
+  /* decorative megakaryocytes */
+  .decor{pointer-events:none;position:fixed;left:0;top:0;width:100%;height:100%;z-index:1;overflow:hidden}
+  .mega{position:absolute;top:-16vh;width:160px;height:160px;opacity:0.98;transform-origin:center;animation:drift 14s linear infinite}
+  @keyframes drift{0%{transform:translateY(-18vh) rotate(0deg)}50%{transform:translateY(40vh) rotate(40deg)}100%{transform:translateY(120vh) rotate(96deg)}}
+  .confetti{pointer-events:none;position:fixed;left:0;top:0;width:100%;height:0;z-index:6;overflow:visible}
+  .confetti span{position:absolute;width:8px;height:12px;border-radius:2px;background:red;animation:conf 1.3s ease-out forwards}
+  @keyframes conf{to{transform:translateY(120vh) rotate(360deg);opacity:0}}
+</style>
+</head>
+<body>
+<div class="decor" aria-hidden="true">
+  <div class="mega" style="left:8%"><svg viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="g1"><stop offset="0%" stop-color="#fff6f6"/><stop offset="100%" stop-color="#ffbfbf"/></radialGradient></defs><path d="M90 18 C68 20 48 34 36 56 C22 82 32 106 46 122 C62 140 86 152 108 150 C132 148 150 138 162 120 C174 100 170 78 158 60 C146 42 124 28 102 22 Z" fill="url(#g1)" stroke="#ff8b8b" stroke-width="2"/><g transform="translate(60,64)"><ellipse cx="18" cy="12" rx="20" ry="16" fill="#fffaf8" stroke="#ffecec"/><ellipse cx="42" cy="18" rx="22" ry="18" fill="#fffaf8" stroke="#ffecec"/><ellipse cx="28" cy="36" rx="18" ry="14" fill="#fffaf8" stroke="#ffecec"/></g></svg></div>
+  <div class="mega" style="left:50%;animation-duration:12s"><svg viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="g2"><stop offset="0%" stop-color="#fff8e6"/><stop offset="100%" stop-color="#ffd280"/></radialGradient></defs><path d="M90 16 C72 20 54 34 40 56 C26 80 30 104 44 120 C60 138 84 148 106 146 C128 144 148 132 158 112 C168 92 164 70 154 54 C144 38 126 26 106 20 Z" fill="url(#g2)" stroke="#ffb36a" stroke-width="2"/><g transform="translate(60,64)"><ellipse cx="18" cy="14" rx="18" ry="14" fill="#fffdf4" stroke="#fff1d9"/><ellipse cx="38" cy="30" rx="20" ry="16" fill="#fffdf4" stroke="#fff1d9"/></g></svg></div>
+  <div class="mega" style="left:82%;animation-duration:15s"><svg viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="g3"><stop offset="0%" stop-color="#f0fbff"/><stop offset="100%" stop-color="#bfe6ff"/></radialGradient></defs><path d="M90 22 C70 18 52 30 38 50 C24 70 30 92 44 108 C60 126 82 136 104 136 C126 136 146 124 156 104 C164 84 160 66 148 52 C136 38 116 26 96 22 Z" fill="url(#g3)" stroke="#6fbff8" stroke-width="2"/><g transform="translate(54,66)"><ellipse cx="22" cy="18" rx="20" ry="16" fill="#f7fdff" stroke="#e6f9ff"/><ellipse cx="38" cy="34" rx="16" ry="12" fill="#f7fdff" stroke="#e6f9ff"/></g></svg></div>
+</div>
+
+<div class="confetti" id="confetti"></div>
+
+<div class="wrap">
+  <header>
+    <div class="logo">🎅</div>
+    <div>
+      <h1>HSCB lab Christmas Connections</h1>
+      <div class="subtitle">Option A1 — submit group items; correct groups show the category name</div>
+    </div>
+  </header>
+
+  <div class="board">
+    <div class="panel">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div><strong>Tiles</strong></div>
+        <div class="small">Drag or click to move</div>
+      </div>
+      <div id="tiles" class="tiles" aria-live="polite" role="list"></div>
+      <div class="controls">
+        <button id="shuffleBtn">🔀 Shuffle</button>
+        <button id="resetBtn" class="secondary">♻️ Reset</button>
+        <button id="revealBtn" class="secondary">✨ Reveal all</button>
+      </div>
+      <div style="margin-top:10px;color:#cfeef7;font-size:13px">Tip: click any tile inside a group to return it to the tiles area.</div>
+    </div>
+
+    <div class="panel">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div><strong>Groups — submit items to check</strong></div>
+        <div class="small">Use the Submit button for each group</div>
+      </div>
+      <div class="bins" id="bins" role="list"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
+        <div id="status" class="small"></div>
+        <div style="display:flex;gap:8px">
+          <button id="checkAllBtn" class="secondary">Check Remaining</button>
+        </div>
+      </div>
+      <div id="resultArea"></div>
+    </div>
+  </div>
+
+  <footer style="margin-top:14px">Made with 🎄 by ChatGPT & HSCB lab</footer>
+</div>
+
+<script>
+const ITEMS = [
+  "Merton","Keble","Wolfson","Queens",
+  "Bodleian Library","Sheldonian","Clarendon Building","Radcliffe Camera",
+  "Sleigh","Sack","Reindeer","Bells",
+  "Mistletoe","Tinsel","Baubles","Star"
+];
+
+const SOLUTIONS = [
+  ["Merton","Keble","Wolfson","Queens"],
+  ["Bodleian Library","Sheldonian","Clarendon Building","Radcliffe Camera"],
+  ["Sleigh","Sack","Reindeer","Bells"],
+  ["Mistletoe","Tinsel","Baubles","Star"]
+];
+
+const CATEGORY_NAMES = [
+  "Oxford Colleges",
+  "Oxford Buildings",
+  "Santa's kit",
+  "Decorations"
+];
+
+let state = { tiles: [], bins: [[],[],[],[]], solved: [false,false,false,false] };
+
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]] } return a; }
+
+function renderTiles(){ const container=document.getElementById('tiles'); container.innerHTML=''; state.tiles.forEach((t,i)=>{ const el=document.createElement('div'); el.className='tile'; el.draggable=true; el.id='tile-'+i; el.textContent=t; el.addEventListener('dragstart', (ev)=>{ ev.dataTransfer.setData('text/plain', t); }); container.appendChild(el); }); }
+
+function renderBins(){ const binsEl=document.getElementById('bins'); binsEl.innerHTML=''; for(let b=0;b<4;b++){ const wrap=document.createElement('div'); wrap.style.display='flex'; wrap.style.flexDirection='column'; const label=document.createElement('div'); label.className='bin-label'; label.textContent='Group '+(b+1); const bin=document.createElement('div'); bin.className='bin'; bin.id='bin-'+b; if(state.solved[b]) bin.classList.add('solved'); bin.addEventListener('dragover',(e)=>{ e.preventDefault(); }); bin.addEventListener('drop',(e)=>{ e.preventDefault(); const name=e.dataTransfer.getData('text/plain'); if(!name) return; moveToBin(name,b); }); bin.addEventListener('click',(e)=>{ if(e.target.classList.contains('tile')){ removeFromBin(e.target.textContent); } }); state.bins[b].forEach(name=>{ const t=document.createElement('div'); t.className='tile'; t.textContent=name; t.draggable=true; t.addEventListener('dragstart',(ev)=>{ ev.dataTransfer.setData('text/plain', name); }); bin.appendChild(t); }); const submitBtn=document.createElement('button'); submitBtn.textContent='Submit Group'; submitBtn.style.marginTop='8px'; submitBtn.addEventListener('click', ()=> submitGroup(b)); const solvedLabel=document.createElement('div'); solvedLabel.style.marginTop='8px'; solvedLabel.style.fontWeight='700'; solvedLabel.style.color='#d1ffd6'; if(state.solved[b]) solvedLabel.textContent = 'Solved: ' + CATEGORY_NAMES[b]; wrap.appendChild(label); wrap.appendChild(bin); wrap.appendChild(submitBtn); wrap.appendChild(solvedLabel); binsEl.appendChild(wrap); } document.getElementById('status').textContent = `Tiles: ${state.tiles.length} • Groups: ${state.bins.map(g=>g.length).join(', ')}`; }
+
+function moveToBin(name,b){ if(state.solved[b]) return; const ti = state.tiles.indexOf(name); if(ti>-1) state.tiles.splice(ti,1); state.bins.forEach((arr,i)=>{ const idx=arr.indexOf(name); if(idx>-1) arr.splice(idx,1); }); state.bins[b].push(name); renderAll(); }
+
+function removeFromBin(name){ state.bins.forEach((arr,i)=>{ const idx=arr.indexOf(name); if(idx>-1){ arr.splice(idx,1); state.tiles.push(name); } }); renderAll(); }
+
+function renderAll(){ renderTiles(); renderBins(); document.getElementById('resultArea').innerHTML = ''; }
+
+function checkGroupItems(b){ const got = [...state.bins[b]].slice().sort().join('|'); for(let i=0;i<SOLUTIONS.length;i++){ if(state.solved[i]) continue; const want = [...SOLUTIONS[i]].slice().sort().join('|'); if(got === want) return i; } return -1; }
+
+function submitGroup(b){ if(state.solved[b]) { alert('This group is already solved.'); return; } if(state.bins[b].length !== 4){ alert('Please put 4 items in this group before submitting.'); return; } const matchIndex = checkGroupItems(b); if(matchIndex === -1){ showResult('Items incorrect for any remaining group. Try again.', false); return; } // items match -> lock to solution matchIndex and reveal name lockGroupToSolution(b, matchIndex); showResult(`Correct! Group ${b+1} = ${CATEGORY_NAMES[matchIndex]}`, true); if(state.solved.every(Boolean)){ finalSuccess(); } }
+
+function lockGroupToSolution(binIndex, solutionIndex){ state.solved[solutionIndex] = true; state.bins[solutionIndex] = [...SOLUTIONS[solutionIndex]]; state.bins.forEach((arr,i)=>{ if(i!==solutionIndex){ arr = arr.filter(x=>!SOLUTIONS[solutionIndex].includes(x)); state.bins[i]=arr; } }); state.tiles = state.tiles.filter(x=>!SOLUTIONS[solutionIndex].includes(x)); renderAll(); }
+
+function showResult(msg, ok){ const area = document.getElementById('resultArea'); area.innerHTML=''; const d = document.createElement('div'); d.className='result ' + (ok? 'correct':'wrong'); d.textContent = msg; area.appendChild(d); }
+
+function confettiBurst(){ const box=document.getElementById('confetti'); for(let i=0;i<90;i++){ const c=document.createElement('span'); c.style.left=(Math.random()*100)+'%'; c.style.background=`hsl(${Math.random()*360},80%,60%)`; c.style.top='0px'; c.style.position='absolute'; c.style.width='8px'; c.style.height='12px'; c.style.borderRadius='2px'; c.style.transform='rotate('+ (Math.random()*360) +'deg)'; c.style.animation='conf 1.5s ease-out forwards'; c.style.animationDelay=(Math.random()*0.5)+'s'; box.appendChild(c); setTimeout(()=>{ if(box.contains(c)) box.removeChild(c); },1700); } }
+
+function finalSuccess(){ showResult('All groups solved — brilliant! 🎉', true); confettiBurst(); }
+
+document.getElementById('shuffleBtn').addEventListener('click', ()=>{ resetAll(); shuffle(state.tiles); renderAll(); }); document.getElementById('resetBtn').addEventListener('click', resetAll); document.getElementById('revealBtn').addEventListener('click', revealAll); document.getElementById('checkAllBtn').addEventListener('click', ()=>{ let remaining = state.bins.map((b,i)=> ({i,ok: b.length===4 && checkGroupItems(i)!==-1})); const ok = remaining.filter(r=>r.ok).length; showResult(`${ok} groups look like they have correct items.`, true); });
+
+function revealAll(){ state.bins = SOLUTIONS.map(a=>[...a]); state.solved = [true,true,true,true]; state.tiles = []; renderAll(); finalSuccess(); }
+
+function resetAll(){ state.tiles = [...ITEMS]; state.bins = [[],[],[],[]]; state.solved = [false,false,false,false]; renderAll(); }
+
+resetAll();
+</script>
+</body>
+</html>
